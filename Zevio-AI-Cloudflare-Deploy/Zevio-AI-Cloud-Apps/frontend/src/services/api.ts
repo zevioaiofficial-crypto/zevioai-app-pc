@@ -16,18 +16,18 @@ import {
 export function getApiBaseUrl(): string {
   try {
     const custom = localStorage.getItem("zevio_api_base_url");
-    if (custom && custom.trim()) return custom.trim().replace(/\\/+$/, "");
+    if (custom && custom.trim()) return custom.trim().replace(/\/+$/, "");
   } catch (_) {}
 
   const buildTimeUrl = (import.meta as any).env?.VITE_ZEVIO_API_URL;
   if (typeof buildTimeUrl === "string" && buildTimeUrl.trim()) {
-    return buildTimeUrl.trim().replace(/\\/+$/, "");
+    return buildTimeUrl.trim().replace(/\/+$/, "");
   }
 
   if (typeof window !== "undefined") {
     const runtimeUrl = (window as any).ZEVIO_API_URL;
     if (typeof runtimeUrl === "string" && runtimeUrl.trim()) {
-      return runtimeUrl.trim().replace(/\\/+$/, "");
+      return runtimeUrl.trim().replace(/\/+$/, "");
     }
     if (window.location.protocol === "http:" || window.location.protocol === "https:") {
       return window.location.origin;
