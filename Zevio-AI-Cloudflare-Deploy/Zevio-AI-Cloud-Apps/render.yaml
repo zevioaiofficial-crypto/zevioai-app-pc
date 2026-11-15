@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: zevio-ai-api
+    runtime: docker
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: VLLM_BASE_URL
+        sync: false
+      - key: VLLM_API_KEY
+        sync: false
+      - key: DEFAULT_MODEL
+        value: Qwen/Qwen2.5-7B-Instruct
+      - key: CODER_MODEL
+        value: Qwen/Qwen2.5-Coder-7B-Instruct
+      - key: MATH_MODEL
+        value: Qwen/Qwen2.5-Math-7B-Instruct
+      - key: VISION_MODEL
+        value: Qwen/Qwen2-VL-7B-Instruct

@@ -1,0 +1,54 @@
+{
+  "name": "zevio-ai-apps",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Zevio AI Android and Windows application wrappers",
+  "main": "desktop/electron/main.cjs",
+  "scripts": {
+    "build:web": "npm --prefix frontend ci && npm --prefix frontend run build",
+    "desktop": "npm run build:web && electron .",
+    "build:exe": "npm run build:web && electron-builder --win nsis --x64",
+    "android:init": "npx cap add android",
+    "android:sync": "npm run build:web && npx cap sync android",
+    "android:open": "npx cap open android",
+    "dev:cloudflare": "npm run build:web && wrangler dev",
+    "deploy:cloudflare": "npm run build:web && wrangler deploy"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.3",
+    "@capacitor/core": "^7.4.3",
+    "@capacitor/android": "^7.4.3",
+    "electron": "^36.5.0",
+    "electron-builder": "^26.0.12",
+    "wrangler": "^4.50.0"
+  },
+  "build": {
+    "appId": "com.zevio.ai",
+    "productName": "Zevio AI",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "desktop/electron/**/*",
+      "frontend/dist/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "desktop/electron/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}
